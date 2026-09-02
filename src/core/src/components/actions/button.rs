@@ -1,5 +1,6 @@
 use icondata::Icon as IconId;
 use leptos::ev;
+use leptos::html::*;
 use leptos::prelude::*;
 use leptos_icons::Icon; // Adjust based on your icon set (e.g., icondata::BsIcon)
 use tailwind_fuse::tw_merge;
@@ -85,6 +86,9 @@ pub fn BasicButton(
     /// Optional child nodes. If provided, `button_text` and `icon` are ignored.
     #[prop(optional)]
     children: Option<ChildrenFn>,
+    /// `NodeRef<Button>` for direct DOM access.
+    #[prop(optional)]
+    button_node_ref: NodeRef<Button>,
 ) -> impl IntoView {
     let button_text_styles = button_text.clone();
     let button_content_styles = move || {
@@ -131,6 +135,7 @@ pub fn BasicButton(
             class=button_class
             on:click=move |ev| onclick.run(ev)
             disabled={disabled}
+            node_ref=button_node_ref
         >
             {
                 if let Some(children) = &children {
